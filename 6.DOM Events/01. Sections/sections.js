@@ -1,24 +1,33 @@
 document.addEventListener('DOMContentLoaded', solve);
 
 function solve() {
-
-   let submitBtn = document.querySelector('input[type="submit"]');
-   submitBtn.addEventListener('click',addContent)
-
-   function addContent(ev){
-      ev.preventDefault();
-
-      let data = document.querySelector('input[type="text"]').value;
-      let sections = data.split(', ');
-      let content = document.getElementById('content');
-
-      for(let entry of sections){
-         let div = document.createElement('div');
-         let p = document.createElement('p');
-         p.textContent = entry;
-         div.appendChild(p);
-         
-         content.appendChild(div);
+   let inputValue = document.querySelector("[type='text']");
+ 
+   let button =  document.querySelector("[type='submit']");
+ 
+   button.addEventListener('click', checkInputValue);
+ 
+   let content = document.getElementById('content');
+ 
+   function checkInputValue(event) {
+      event.preventDefault();
+      let splittedInput = inputValue.value.split(', ');
+ 
+      for (let string of splittedInput) {
+         let newSection = document.createElement('div');
+         let newP = document.createElement('p');
+         newP.style.display = 'none';
+         newP.textContent = string;
+ 
+         newSection.appendChild(newP);
+ 
+         newSection.addEventListener('click', handleSection);
+ 
+         function handleSection(event) {
+            event.target.querySelector('p').style.display = 'block';
+         }
+ 
+         content.appendChild(newSection);
       }
    }
 }
